@@ -2,7 +2,7 @@ import lightbulb
 import hikari
 import random
 
-token = "OTY1Njc2MzQzODgwNzE2MzE4.GVHKAI.3NMNej6gpR0Cei5X7ijIyRVUEmhFg7YVoJuxL8"  # your token
+token = "token"  # your token
 
 delete_channels = False  # set to "True" if you want to delete all channels
 ban_members = False  # set to "True" if you want to ban all members
