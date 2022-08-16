@@ -1,4 +1,4 @@
-# customizable discord server nuker
+# Customizable Discord Server Nuker
 **Usage**
 - install python https://www.youtube.com/watch?v=Kn1HF3oD19c
 - download discord_nuker [here](https://github.com/3BixxPy/discord_nuker/archive/refs/heads/main.zip) and unzip
