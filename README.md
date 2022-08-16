@@ -1,7 +1,7 @@
 # customizable discord server nuker
 **Usage**
 - install python https://www.youtube.com/watch?v=Kn1HF3oD19c
-- download discord_nuker [here](https://github.com/3BixxPy/discord_nuker/archive/refs/heads/main.zip) unzip
+- download discord_nuker [here](https://github.com/3BixxPy/discord_nuker/archive/refs/heads/main.zip) and unzip
 - open CMD and navigate to your download folder with ```cd C:\your_folder```
 - download the requirements with ```pip install -r requirements.txt```
 - setup your bot [here](https://discord.com/developers/applications) in yourbot\settings\bot enable  \
