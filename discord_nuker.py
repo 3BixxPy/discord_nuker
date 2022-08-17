@@ -27,7 +27,6 @@ bot = lightbulb.BotApp(
 
 @bot.listen(hikari.StartedEvent)
 async def on_start(event):
-    print(bot.rest.fetch_members(guild=1009208323679191161))
     print("""\
     
  $$$$$$\  $$$$$$$\  $$\                           
