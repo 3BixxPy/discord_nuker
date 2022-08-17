@@ -8,3 +8,6 @@
   - Privileged Gateway Intents (all 3) and set admin privilages
 - edit discord_nuker.py, you can use note pad
 - you can now run the bot with ```python discord_nuker.py```
+
+
+# [CLICK HERE FOR TUTORIAL](https://www.youtube.com/watch?v=XIkvu52GEaA&t=32s&ab_channel=3Bixx)
