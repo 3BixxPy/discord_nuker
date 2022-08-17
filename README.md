@@ -10,4 +10,4 @@
 - you can now run the bot with ```python discord_nuker.py```
 
 
-# [CLICK HERE FOR TUTORIAL](https://www.youtube.com/watch?v=XIkvu52GEaA&t=32s&ab_channel=3Bixx)
+# [CLICK HERE FOR VIDEO TUTORIAL](https://www.youtube.com/watch?v=XIkvu52GEaA&t=32s&ab_channel=3Bixx)
