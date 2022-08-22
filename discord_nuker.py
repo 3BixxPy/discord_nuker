@@ -80,8 +80,9 @@ async def generates_spam(ctx):
 
     created_channels = 0
 
-    member_iter = iter(await bot.rest.fetch_members(guild=ctx.get_guild()))
+    
     while True:
+        member_iter = iter(await bot.rest.fetch_members(guild=ctx.get_guild()))
         member = next(member_iter)
         channel_iter = iter(await bot.rest.fetch_guild_channels(guild=ctx.get_guild()))
         channel = next(channel_iter)
